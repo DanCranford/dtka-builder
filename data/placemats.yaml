@@ -6,7 +6,7 @@ prophets:
     epithet: '"The congregation will drink as one."'
     build_path: S / V Build Path
     accent_color: "#c8601a"
-    portrait_image: ""
+    portrait_image: "images/Prophet Reverand.png"
     abilities:
       - tag: "Primary — Prophet Phase, once per turn"
         text: "Pay <strong>1S + 1D</strong> → add <strong>1V</strong> to your pool."
@@ -55,7 +55,7 @@ prophets:
     epithet: '"New name. New logo. Same NDA."'
     build_path: D / S Build Path
     accent_color: "#1a3a5a"
-    portrait_image: "images/prophet_the_brand.png"
+    portrait_image: "images/Prophet Brand.png"
     abilities:
       - tag: "Primary — Prophet Phase, once per turn"
         text: "Gain <strong>1S</strong> for every <strong>5 Seekers</strong> currently in your pool (round down). The congregation grows itself."
@@ -104,7 +104,7 @@ prophets:
     epithet: '"Auditing the soul is a service. Services have fees."'
     build_path: $ / V Build Path
     accent_color: "#1a4a8b"
-    portrait_image: ""
+    portrait_image: "images/Prophet Commodore.png"
     abilities:
       - tag: "Primary — Prophet Phase, once per turn"
         text: "Gain <strong>1$</strong> for each Seeker currently in your pool."
@@ -153,7 +153,7 @@ prophets:
     epithet: '"We are all one. Especially your Seekers, which are now mine."'
     build_path: V / D Build Path
     accent_color: "#5a3a10"
-    portrait_image: ""
+    portrait_image: "images/Prophit Famliy Man.png"
     abilities:
       - tag: "Primary — Prophet Phase, once per turn"
         text: "Move <strong>1S</strong> from any opponent's pool to your <strong>V</strong> pool. If target has no Seekers, steal <strong>2$</strong> instead."
@@ -202,7 +202,7 @@ prophets:
     epithet: '"Silence is not the absence of speech. It is the presence of billing."'
     build_path: $ / D Build Path
     accent_color: "#c87820"
-    portrait_image: ""
+    portrait_image: "images/Prophet Master.png"
     abilities:
       - tag: "Primary — Prophet Phase, once per turn"
         text: "Pay <strong>1D</strong> → gain <strong>1$</strong>. Belief is a commodity. The Master is the exchange rate."
@@ -251,7 +251,7 @@ prophets:
     epithet: '"He cried on camera. Donations tripled."'
     build_path: S / $ Build Path
     accent_color: "#8b1a10"
-    portrait_image: ""
+    portrait_image: "images/Prophet Televangalist.png"
     abilities:
       - tag: "Primary — Prophet Phase, once per turn"
         text: "Pay <strong>1$</strong> → gain <strong>1S per 10D</strong> currently in your pool (round down, min 1S)."
