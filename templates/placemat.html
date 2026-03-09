@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Drink the Kool-Aide — {{ prophet.name }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Special+Elite&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Print page ─────────────────────────────────────────────────── */
+@page { size: 11in 8.5in; margin: 0; }
+html, body { margin: 0; padding: 0; background: #fff; }
+body { background: #fff !important; padding: 0 !important; }
+
+/* ── Single-sheet wrapper ────────────────────────────────────────── */
+.sheet {
+  width: 11in;
+  height: 8.5in;
+  overflow: hidden;
+  position: relative;
+}
+.single-wrap {
+  width: 11in;
+  height: 8.5in;
+  padding: 0.18in;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.single-wrap .mat {
+  width: 10.64in;
+  transform-origin: top center;
+  box-shadow: none !important;
+}
+
+/* ── Design tokens ──────────────────────────────────────────────── */
+:root {
+  --parchment:  #e8d8a8;
+  --cream:      #f8f0d8;
+  --gold:       #c8882a;
+  --gold-lt:    #e8b84b;
+  --ink:        #1e0e04;
+  --ink-md:     #3a1e08;
+  --ink-lt:     #5a3810;
+  --faded:      #8a6838;
+  --apostle:    #3b5a2a;
+  --artifact:   #2a4a6b;
+  --doctrine:   #5a2a5a;
+  --crimson:    #7b0d1e;
+  --amber:      #7a4f00;
+  --slot-w:     216px;
+  --slot-h:     302px;
+}
+
+/* ── MAT SHELL ───────────────────────────────────────────────────── */
+.mat {
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+}
+.mat::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.065'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+  pointer-events: none; z-index: 200;
+  mix-blend-mode: multiply; opacity: 0.7;
+  border-radius: 10px;
+}
+
+/* parchment background */
+.mat-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse at 28% 28%, #f0e0b0 0%, #d8c080 55%, #c0a050 100%),
+    repeating-linear-gradient(45deg,  rgba(90,50,10,.028) 0, rgba(90,50,10,.028) 1px, transparent 1px, transparent 18px),
+    repeating-linear-gradient(-45deg, rgba(90,50,10,.028) 0, rgba(90,50,10,.028) 1px, transparent 1px, transparent 18px);
+}
+/* per-prophet accent tint — driven by prophet.accent_color */
+.mat-tint {
+  position: absolute; inset: 0; z-index: 1;
+  background: {{ prophet.accent_color }};
+  opacity: 0.07; border-radius: 10px;
+}
+
+/* riso offset layers */
+.riso-a { position:absolute;inset:0;background:#c85010;opacity:.05;transform:translate(2px,1.5px);z-index:1;border-radius:10px; }
+.riso-t { position:absolute;inset:0;background:#2a6060;opacity:.03;transform:translate(-1.5px,-1px);z-index:1;border-radius:10px; }
+
+/* borders + corner ornaments */
+.mat-border       { position:absolute;inset:8px;  border:1.5px solid rgba(90,50,10,.42);border-radius:6px;z-index:5;pointer-events:none; }
+.mat-border-inner { position:absolute;inset:13px; border:0.8px solid rgba(90,50,10,.20);border-radius:4px;z-index:5;pointer-events:none; }
+.mat-corner { position:absolute;z-index:10;font-size:11px;color:rgba(90,50,10,.38);font-family:'IM Fell English',serif;pointer-events:none; }
+.mc-tl{top:20px;left:22px}
+.mc-tr{top:20px;right:22px;transform:scaleX(-1)}
+.mc-bl{bottom:20px;left:22px;transform:scaleY(-1)}
+.mc-br{bottom:20px;right:22px;transform:scale(-1,-1)}
+
+/* ── INNER LAYOUT ────────────────────────────────────────────────── */
+.mat-inner {
+  position: relative;
+  z-index: 10;
+  padding: 20px 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+/* ── TITLE BAR ───────────────────────────────────────────────────── */
+.mat-titlebar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(90,50,10,.28);
+  padding-bottom: 8px;
+}
+.prophet-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px; font-weight: 900;
+  color: var(--ink-md);
+  letter-spacing: 0.04em; line-height: 1;
+}
+.prophet-epithet {
+  font-family: 'IM Fell English', serif;
+  font-style: italic; font-size: 14px;
+  color: var(--faded); letter-spacing: 0.06em;
+}
+.game-label {
+  font-family: 'Special Elite', cursive;
+  font-size: 9px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--faded);
+  opacity: 0.7; text-align: right; line-height: 1.8;
+}
+
+/* ── TOP SECTION: portrait + info ───────────────────────────────── */
+.mat-top {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 14px;
+}
+
+/* Portrait */
+.portrait-frame {
+  border: 2px solid rgba(90,50,10,.55);
+  border-radius: 5px;
+  overflow: hidden;
+  background: #1a0f05;
+  position: relative;
+  height: 340px;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(200,136,42,.18);
+}
+.portrait-frame::after {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(30,14,4,.45) 100%);
+  z-index:3; pointer-events:none; border-radius:4px;
+}
+.portrait-frame::before {
+  content:''; position:absolute; inset:0;
+  background-image: radial-gradient(circle, rgba(60,30,5,.07) 1px, transparent 1px);
+  background-size: 3px 3px; z-index:4; pointer-events:none; mix-blend-mode:multiply;
+}
+.portrait-frame img { width:100%; height:100%; display:block; object-fit:cover; object-position:center top; }
+.portrait-placeholder {
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Special Elite',cursive; font-size:11px;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:rgba(200,160,80,.35);
+}
+
+/* Info panels */
+.info-col { display:flex; flex-direction:column; gap:10px; }
+.panel {
+  border:1px solid rgba(90,50,10,.28);
+  border-radius:4px;
+  background:rgba(248,240,216,.52);
+  padding:10px 13px;
+  display:flex; flex-direction:column; gap:7px;
+}
+.panel-title {
+  font-family:'Special Elite',cursive; font-size:8.5px;
+  letter-spacing:.2em; text-transform:uppercase;
+  color:var(--faded); border-bottom:1px solid rgba(90,50,10,.18);
+  padding-bottom:5px;
+}
+
+/* Ability rows */
+.ab-row { display:flex; flex-direction:column; gap:3px; }
+.ab-tag {
+  font-family:'Special Elite',cursive; font-size:7.5px;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:var(--faded); opacity:.85;
+}
+.ab-text {
+  font-family:'Libre Baskerville',serif; font-size:9.5px; line-height:1.45; color:var(--ink);
+  border-left:2.5px solid rgba(90,50,10,.32);
+  background:rgba(240,230,200,.6);
+  padding:4px 8px; border-radius:0 3px 3px 0;
+}
+.ab-text.penalty      { border-left-color:var(--crimson); background:rgba(123,13,30,.06); }
+.ab-text.resurrection { border-left-color:var(--amber);   background:rgba(122,79,0,.06); font-style:italic; }
+
+/* Win condition rows */
+.win-row {
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+  background:rgba(240,230,200,.65); border:1px solid rgba(90,50,10,.22);
+  border-radius:3px; padding:5px 8px;
+}
+.win-badge {
+  font-family:'Special Elite',cursive; font-size:7.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--faded); flex-shrink:0;
+}
+.win-text {
+  font-family:'Libre Baskerville',serif; font-size:9px; color:var(--ink);
+  flex:1; text-align:center; line-height:1.3;
+}
+.win-num {
+  font-family:'Playfair Display',serif; font-size:15px; font-weight:900;
+  color:var(--ink-md); flex-shrink:0; min-width:36px; text-align:right;
+}
+.progress-row { display:flex; align-items:center; gap:5px; padding:0 2px; }
+.progress-label {
+  font-family:'Special Elite',cursive; font-size:7px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--faded); opacity:.7; flex-shrink:0;
+}
+.tick-boxes { display:flex; gap:3px; }
+.tick {
+  width:15px; height:15px; border:1px solid rgba(90,50,10,.38); border-radius:2px;
+  background:rgba(255,255,255,.38); font-family:'Special Elite',cursive; font-size:6.5px;
+  display:flex; align-items:center; justify-content:center; color:var(--faded);
+}
+
+/* Slot count summary pills */
+.slots-summary { display:flex; gap:6px; flex-wrap:wrap; }
+.slot-pip {
+  font-family:'Special Elite',cursive; font-size:8px; letter-spacing:.06em;
+  border-radius:3px; padding:3px 8px; color:#fff;
+}
+.pip-d{ background:var(--doctrine); }
+.pip-a{ background:var(--apostle); }
+.pip-r{ background:var(--artifact); }
+
+/* ── DIVIDER RULE ─────────────────────────────────────────────────── */
+.mat-rule {
+  height:1px;
+  background:linear-gradient(to right,transparent,rgba(90,50,10,.3),transparent);
+  margin:0; flex-shrink:0;
+}
+
+/* ── CARD SLOTS SECTION ─────────────────────────────────────────── */
+.slots-section { display:flex; flex-direction:column; gap:10px; padding:0 0 12px; }
+.slot-row-wrap  { display:flex; flex-direction:column; gap:5px; }
+.slot-row-header { display:flex; align-items:center; gap:10px; }
+.slot-row-label {
+  font-family:'Special Elite',cursive; font-size:8.5px; letter-spacing:.18em;
+  text-transform:uppercase; color:#fff; padding:3px 12px; border-radius:2px; flex-shrink:0;
+}
+.slot-row-label.d{ background:var(--doctrine); }
+.slot-row-label.a{ background:var(--apostle); }
+.slot-row-label.r{ background:var(--artifact); }
+.slot-row-note {
+  font-family:'Special Elite',cursive; font-size:7.5px;
+  letter-spacing:.1em; color:var(--faded); opacity:.7;
+}
+.slot-row-rule {
+  flex:1; height:1px;
+  background:linear-gradient(to right,rgba(90,50,10,.28),transparent);
+}
+.slots-group { display:flex; gap:10px; align-items:flex-start; }
+.card-slot {
+  width:var(--slot-w); height:var(--slot-h);
+  border:1.5px dashed rgba(90,50,10,.38); border-radius:6px;
+  background:rgba(200,160,80,.1);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:6px; position:relative; flex-shrink:0;
+}
+.card-slot::before {
+  content:''; position:absolute; inset:5px;
+  border:1px dashed rgba(90,50,10,.16); border-radius:4px; pointer-events:none;
+}
+.card-slot.locked {
+  opacity:.28; background:rgba(90,50,10,.04);
+  border-style:dotted; border-color:rgba(90,50,10,.22);
+}
+.slot-num  { font-family:'Special Elite',cursive; font-size:10px; letter-spacing:.1em; color:var(--faded); opacity:.55; }
+.lock-icon { font-size:22px; opacity:.32; line-height:1; }
+
+/* ── RESOURCE POOLS + TURN ORDER ─────────────────────────────────── */
+.mat-bottom {
+  display:grid; grid-template-columns:1fr 270px; gap:10px; padding:0 0 18px;
+}
+.resource-pools { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.resource-pool {
+  border:1.5px solid rgba(90,50,10,.28); border-radius:4px;
+  padding:7px 8px 6px; display:flex; flex-direction:column; align-items:center; gap:4px;
+}
+.resource-pool.s{ background:rgba(58,90,42,.07);  border-color:rgba(58,90,42,.32); }
+.resource-pool.m{ background:rgba(200,136,42,.07); border-color:rgba(200,136,42,.32); }
+.resource-pool.d{ background:rgba(90,42,90,.07);   border-color:rgba(90,42,90,.32); }
+.resource-pool.v{ background:rgba(123,13,30,.07);  border-color:rgba(123,13,30,.32); }
+.res-sym {
+  width:26px; height:26px; border-radius:50%; border:2px solid;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Special Elite',cursive; font-size:13px; font-weight:bold;
+}
+.rs-s{ border-color:var(--apostle); background:rgba(58,90,42,.14); color:var(--apostle); }
+.rs-m{ border-color:var(--amber);   background:rgba(200,136,42,.14);color:var(--amber); }
+.rs-d{ border-color:var(--doctrine);background:rgba(90,42,90,.14);  color:var(--doctrine); }
+.rs-v{ border-color:var(--crimson); background:rgba(123,13,30,.14); color:var(--crimson); }
+.res-name  { font-family:'Special Elite',cursive; font-size:7.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-lt); text-align:center; }
+.res-token { font-family:'IM Fell English',serif; font-style:italic; font-size:7px; color:var(--faded); text-align:center; line-height:1.3; }
+.res-area  { width:100%; height:34px; border:1px dashed rgba(90,50,10,.18); border-radius:3px; background:rgba(255,255,255,.2); margin-top:1px; }
+.res-note  { font-family:'Special Elite',cursive; font-size:6px; letter-spacing:.06em; color:var(--crimson); text-align:center; opacity:.85; line-height:1.4; }
+
+/* Turn phases */
+.turn-fallen { display:flex; flex-direction:column; gap:6px; }
+.turn-strip {
+  background:var(--ink-md); border-radius:4px; padding:7px 10px;
+  display:flex; align-items:center; flex:1;
+}
+.turn-phase {
+  display:flex; flex-direction:column; align-items:center; flex:1; position:relative;
+}
+.turn-phase:not(:last-child)::after {
+  content:'›'; position:absolute; right:-4px; top:50%; transform:translateY(-50%);
+  font-size:14px; color:rgba(200,136,42,.4); font-family:serif; z-index:2;
+}
+.ph-num  { font-family:'Special Elite',cursive; font-size:15px; color:var(--gold); line-height:1; opacity:.9; }
+.ph-name { font-family:'Special Elite',cursive; font-size:6.5px; letter-spacing:.1em; text-transform:uppercase; color:rgba(200,160,80,.7); margin-top:2px; text-align:center; }
+.ph-note { font-family:'IM Fell English',serif; font-style:italic; font-size:6.5px; color:rgba(180,140,60,.5); text-align:center; line-height:1.3; margin-top:1px; }
+
+/* Fallen prophet strip */
+.fallen-strip {
+  background:linear-gradient(135deg,#7b0d1e 0%,#5a0814 100%);
+  border-radius:4px; padding:7px 10px;
+  display:flex; flex-direction:column; justify-content:center; gap:3px;
+}
+.f-title { font-family:'Special Elite',cursive; font-size:7.5px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,180,160,.9); }
+.f-desc  { font-family:'IM Fell English',serif; font-style:italic; font-size:8px; color:rgba(255,200,180,.65); line-height:1.4; }
+
+/* ── 120% text scale overrides ──────────────────────────────────── */
+.mat-inner { padding: 16px 16px 0; gap: 10px; }
+.mat-titlebar { padding-bottom: 6px; }
+.prophet-name { font-size: 33.6px; }
+.prophet-epithet { font-size: 15.6px; }
+.game-label { font-size: 9.6px; line-height: 1.6; }
+.mat-top { grid-template-columns: 235px 1fr; gap: 12px; }
+.portrait-frame { height: 332px; }
+.panel { padding: 8px 11px; gap: 6px; }
+.panel-title { font-size: 9.6px; padding-bottom: 4px; }
+.ab-tag { font-size: 8.4px; }
+.ab-text { font-size: 10.8px; line-height: 1.36; }
+.win-text { font-size: 10.2px; }
+.win-num { font-size: 16.8px; }
+.progress-row { gap: 4px; }
+.tick { width: 14px; height: 14px; font-size: 7.2px; }
+.slot-pip { font-size: 9px; padding: 3px 7px; }
+.slots-summary { gap: 5px; }
+.slots-section { display: none !important; }
+.mat-bottom { grid-template-columns: 1fr 258px; gap: 9px; padding: 0 0 14px; }
+.resource-pools { gap: 7px; }
+.resource-pool { padding: 6px 6px 5px; gap: 3px; }
+.res-area { height: 30px; }
+.turn-strip, .fallen-strip { padding: 6px 8px; }
+.ph-num { font-size: 15.6px; }
+.f-desc { font-size: 9px; }
+</style>
+</head>
+<body>
+
+<div class="sheet"><div class="single-wrap"><div class="mat">
+  <div class="mat-bg"></div>
+  <div class="mat-tint"></div>
+  <div class="riso-a"></div>
+  <div class="riso-t"></div>
+  <div class="mat-border"></div>
+  <div class="mat-border-inner"></div>
+  <div class="mat-corner mc-tl">❧</div>
+  <div class="mat-corner mc-tr">❧</div>
+  <div class="mat-corner mc-bl">❧</div>
+  <div class="mat-corner mc-br">❧</div>
+
+  <div class="mat-inner">
+
+    {# ── TITLE BAR ──────────────────────────────────────────────── #}
+    <div class="mat-titlebar">
+      <div>
+        <div class="prophet-name">{{ prophet.name }}</div>
+        <div class="prophet-epithet">{{ prophet.epithet }}</div>
+      </div>
+      <div class="game-label">Drink the Kool-Aide · dtka v1.0<br>{{ prophet.build_path }}</div>
+    </div>
+
+    {# ── PORTRAIT + INFO PANELS ─────────────────────────────────── #}
+    <div class="mat-top">
+
+      <div class="portrait-frame">
+        {% if prophet.portrait_image %}
+          <img src="{{ prophet.portrait_image }}" alt="{{ prophet.name }} portrait">
+        {% else %}
+          <div class="portrait-placeholder">Portrait</div>
+        {% endif %}
+      </div>
+
+      <div class="info-col">
+
+        {# Abilities panel #}
+        <div class="panel">
+          <div class="panel-title">Abilities</div>
+          {% for ability in prophet.abilities %}
+          <div class="ab-row">
+            <div class="ab-tag">{{ ability.tag }}</div>
+            <div class="ab-text {{ ability.style | default('') }}">{{ ability.text | safe }}</div>
+          </div>
+          {% endfor %}
+        </div>
+
+        {# Win Conditions panel #}
+        <div class="panel">
+          <div class="panel-title">Win Conditions — complete both to win</div>
+          {% for wc in prophet.win_conditions %}
+          <div class="win-row" {% if not loop.first %}style="margin-top:5px"{% endif %}>
+            <div class="win-badge">{{ wc.badge }}</div>
+            <div class="win-text">{{ wc.text }}</div>
+            <div class="win-num">{{ wc.target }}</div>
+          </div>
+          <div class="progress-row">
+            <div class="progress-label">Progress</div>
+            <div class="tick-boxes">
+              {% for tick in wc.progress %}
+              <div class="tick">{{ tick }}</div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        {# Slot count summary pill row #}
+        <div class="panel" style="flex-direction:row;align-items:center;gap:12px;padding:8px 13px;">
+          <div class="panel-title" style="border:none;padding:0;margin:0;white-space:nowrap;">Slot Counts</div>
+          <div class="slots-summary">
+            <div class="slot-pip pip-d">Doctrine ×{{ prophet.slots.doctrine | selectattr('locked','equalto',false) | list | length }}</div>
+            <div class="slot-pip pip-a">Apostle ×{{ prophet.slots.apostle | selectattr('locked','equalto',false) | list | length }}</div>
+            <div class="slot-pip pip-r">Artifact ×{{ prophet.slots.artifact | selectattr('locked','equalto',false) | list | length }}</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mat-rule"></div>
+
+    {# ── CARD SLOTS ─────────────────────────────────────────────── #}
+    <div class="slots-section">
+
+      <div class="slot-row-wrap">
+        <div class="slot-row-header">
+          <div class="slot-row-label d">Doctrine</div>
+          <div class="slot-row-rule"></div>
+          <div class="slot-row-note">Replace any time · loss conditions apply while in play</div>
+        </div>
+        <div class="slots-group">
+          {% for slot in prophet.slots.doctrine %}
+          <div class="card-slot {% if slot.locked %}locked{% endif %}">
+            {% if slot.locked %}<div class="lock-icon">🔒</div>{% endif %}
+            <div class="slot-num">{{ slot.num }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="slot-row-wrap">
+        <div class="slot-row-header">
+          <div class="slot-row-label a">Apostle</div>
+          <div class="slot-row-rule"></div>
+          <div class="slot-row-note">Permanent until removed · active abilities once per turn</div>
+        </div>
+        <div class="slots-group">
+          {% for slot in prophet.slots.apostle %}
+          <div class="card-slot {% if slot.locked %}locked{% endif %}">
+            {% if slot.locked %}<div class="lock-icon">🔒</div>{% endif %}
+            <div class="slot-num">{{ slot.num }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="slot-row-wrap">
+        <div class="slot-row-header">
+          <div class="slot-row-label r">Artifact</div>
+          <div class="slot-row-rule"></div>
+          <div class="slot-row-note">Permanent until removed · passive effects always active</div>
+        </div>
+        <div class="slots-group">
+          {% for slot in prophet.slots.artifact %}
+          <div class="card-slot {% if slot.locked %}locked{% endif %}">
+            {% if slot.locked %}<div class="lock-icon">🔒</div>{% endif %}
+            <div class="slot-num">{{ slot.num }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mat-rule"></div>
+
+    {# ── RESOURCE POOLS + TURN ORDER ────────────────────────────── #}
+    <div class="mat-bottom">
+
+      <div class="resource-pools">
+        <div class="resource-pool s">
+          <div class="res-sym rs-s">S</div>
+          <div class="res-name">Seekers</div>
+          <div class="res-token">White cubes</div>
+          <div class="res-area"></div>
+        </div>
+        <div class="resource-pool m">
+          <div class="res-sym rs-m">$</div>
+          <div class="res-name">Money</div>
+          <div class="res-token">Gold coins</div>
+          <div class="res-area"></div>
+        </div>
+        <div class="resource-pool d">
+          <div class="res-sym rs-d">D</div>
+          <div class="res-name">Devotion</div>
+          <div class="res-token">Purple discs</div>
+          <div class="res-area"></div>
+        </div>
+        <div class="resource-pool v">
+          <div class="res-sym rs-v">V</div>
+          <div class="res-name">Victims</div>
+          <div class="res-token">Red skulls</div>
+          <div class="res-area"></div>
+          <div class="res-note">All-time<br>Never removed</div>
+        </div>
+      </div>
+
+      <div class="turn-fallen">
+        <div class="turn-strip">
+          {% for phase in prophet.turn_phases %}
+          <div class="turn-phase">
+            <div class="ph-num">{{ loop.index }}</div>
+            <div class="ph-name">{{ phase.name }}</div>
+            <div class="ph-note">{{ phase.note | safe }}</div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="fallen-strip">
+          <div class="f-title">☩ Fallen Prophet</div>
+          <div class="f-desc">{{ prophet.fallen_text | safe }}</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- end mat-inner -->
+</div></div></div>
+
+</body>
+</html>

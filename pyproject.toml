@@ -1,0 +1,22 @@
+[project]
+name = "drink-the-koolaid-renderer"
+version = "0.1.0"
+description = "Template-driven PDF renderer for Drink the Koolaid cards and placemats"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "jinja2>=3.1.4",
+  "playwright>=1.52.0",
+  "pydantic>=2.11.0",
+  "pyyaml>=6.0.2",
+]
+
+[project.scripts]
+render-assets = "drink_the_koolaid_renderer.render:main"
+
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = []

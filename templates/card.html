@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Card Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Special+Elite&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+@page {
+  size: 11in 8.5in;
+  margin: 0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: white; }
+
+.sheet {
+  width: 11in;
+  height: 8.5in;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  page-break-after: always;
+}
+.sheet:last-child { page-break-after: auto; }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 238px);
+  gap: 14px;
+}
+
+/* ── CARD BASE ─────────────────────────────────────────────────────── */
+.card {
+  width: 238px;
+  height: 332px;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.card-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  z-index: 0;
+  background: radial-gradient(ellipse at 35% 30%, #f5edd6 0%, #dcc882 50%, #c4a850 100%);
+}
+.card-riso-a {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  z-index: 1;
+  opacity: 0.07;
+  mix-blend-mode: multiply;
+}
+.card-riso-t {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  z-index: 1;
+  background: radial-gradient(ellipse at 65% 70%, rgba(200,100,20,.08) 0%, transparent 65%);
+  mix-blend-mode: multiply;
+}
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  z-index: 3;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  mix-blend-mode: multiply;
+  opacity: .6;
+  pointer-events: none;
+}
+.card-border {
+  position: absolute;
+  inset: 5px;
+  border-radius: 5px;
+  z-index: 2;
+  pointer-events: none;
+  border: 1.2px solid rgba(90,50,10,.45);
+}
+.card-border-inner {
+  position: absolute;
+  inset: 9px;
+  border-radius: 3px;
+  z-index: 2;
+  pointer-events: none;
+  border: .7px solid rgba(90,50,10,.2);
+}
+.card-corner {
+  position: absolute;
+  z-index: 15;
+  font-size: 8px;
+  color: rgba(90,50,10,.35);
+  font-family: 'IM Fell English', serif;
+  pointer-events: none;
+  line-height: 1;
+}
+.cc-tl { top: 11px; left: 12px; }
+.cc-tr { top: 11px; right: 12px; transform: scaleX(-1); }
+.cc-bl { bottom: 11px; left: 12px; transform: scaleY(-1); }
+.cc-br { bottom: 11px; right: 12px; transform: scale(-1,-1); }
+.copy-badge {
+  position: absolute;
+  top: 6px; right: 6px;
+  z-index: 200;
+  background: rgba(0,0,0,.55);
+  color: #c8a060;
+  font-family: 'Special Elite', cursive;
+  font-size: 7px;
+  letter-spacing: .08em;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+/* ── TYPE HEADER BAND ────────────────────────────────────────────── */
+.card-type-band {
+  position: relative;
+  z-index: 10;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  margin: 12px 12px 0;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.type-label {
+  font-family: 'Special Elite', cursive;
+  font-size: 7.5px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: .92;
+}
+.type-cost {
+  font-family: 'Special Elite', cursive;
+  font-size: 8px;
+  letter-spacing: .08em;
+  color: rgba(255,255,255,.85);
+  background: rgba(0,0,0,.22);
+  border-radius: 3px;
+  padding: 1px 6px;
+}
+
+/* ── CARD NAME ───────────────────────────────────────────────────── */
+.card-name {
+  position: relative;
+  z-index: 10;
+  padding: 7px 13px 4px;
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.15;
+  color: #1a0f05;
+  flex-shrink: 0;
+}
+.card.herald .card-name { font-size: 12px; }
+
+/* ── ART ZONE ────────────────────────────────────────────────────── */
+.card-art {
+  position: relative;
+  z-index: 10;
+  margin: 0 12px;
+  height: 110px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(90,50,10,.35);
+}
+.card-art-fill {
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.card-art-symbol {
+  font-size: 36px;
+  opacity: .18;
+  line-height: 1;
+  position: absolute;
+}
+.card-art-halftone {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(60,30,5,.14) 1px, transparent 1px);
+  background-size: 4px 4px;
+  z-index: 2;
+}
+.card-art-gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.card-art img {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+/* ── DIVIDER ─────────────────────────────────────────────────────── */
+.card-divider {
+  position: relative;
+  z-index: 10;
+  margin: 6px 14px 4px;
+  height: 1px;
+  flex-shrink: 0;
+}
+
+/* ── EFFECT TEXT ─────────────────────────────────────────────────── */
+.card-effect {
+  position: relative;
+  z-index: 10;
+  padding: 0 13px;
+  flex: 1;
+  overflow: hidden;
+}
+.effect-tag {
+  font-family: 'Special Elite', cursive;
+  font-size: 6.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 1px 5px;
+  border-radius: 2px;
+  color: #fff;
+  display: inline-block;
+  margin-bottom: 3px;
+}
+.effect-body {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 7.5px;
+  line-height: 1.42;
+  color: #1a0f05;
+}
+.effect-body strong { font-weight: 700; }
+
+/* ── FLAVOUR TEXT ────────────────────────────────────────────────── */
+.card-flavour {
+  position: relative;
+  z-index: 10;
+  margin: 4px 13px 0;
+  padding: 3px 7px;
+  border-left: 2px solid rgba(90,50,10,.3);
+  flex-shrink: 0;
+}
+.flavour-text {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 7px;
+  line-height: 1.38;
+  color: #7a5a3a;
+}
+
+/* ── FOOTER ──────────────────────────────────────────────────────── */
+.card-footer {
+  position: relative;
+  z-index: 10;
+  padding: 5px 13px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.footer-game {
+  font-family: 'Special Elite', cursive;
+  font-size: 6px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(90,50,10,.45);
+}
+.footer-set {
+  font-family: 'Special Elite', cursive;
+  font-size: 6px;
+  letter-spacing: .1em;
+  color: rgba(90,50,10,.45);
+}
+
+/* ── LOSS CONDITION BOX (Doctrines) ──────────────────────────────── */
+.loss-box {
+  position: relative;
+  z-index: 10;
+  margin: 4px 12px 0;
+  padding: 3px 7px;
+  border-radius: 3px;
+  background: rgba(123,13,30,.08);
+  border-left: 2.5px solid #7b0d1e;
+  flex-shrink: 0;
+}
+.loss-tag {
+  font-family: 'Special Elite', cursive;
+  font-size: 6px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #7b0d1e;
+}
+.loss-body {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 7px;
+  line-height: 1.38;
+  color: #1a0f05;
+}
+
+/* ── REWARD BOX (Missions) ───────────────────────────────────────── */
+.reward-box {
+  position: relative;
+  z-index: 10;
+  margin: 3px 12px 0;
+  padding: 3px 7px;
+  border-radius: 3px;
+  background: rgba(58,90,42,.1);
+  border-left: 2.5px solid #3b5a2a;
+  flex-shrink: 0;
+}
+.reward-tag {
+  font-family: 'Special Elite', cursive;
+  font-size: 6px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #3b5a2a;
+}
+.reward-body {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 7px;
+  line-height: 1.38;
+  color: #1a0f05;
+}
+</style>
+</head>
+<body>
+{%- set tag_colour = {
+  'apostle':  '#3b5a2a',
+  'artifact': '#2a4a6b',
+  'doctrine': '#5a2a5a',
+  'mission':  '#6b3a1a',
+  'event':    '#1a3a2a',
+  'herald':   '#6b5010',
+  'age':      '#2a2a5a'
+} -%}
+{%- set riso_colour = {
+  'apostle':  '#508020',
+  'artifact': '#1060c0',
+  'doctrine': '#8020a0',
+  'mission':  '#c06020',
+  'event':    '#208060',
+  'herald':   '#c09010',
+  'age':      '#4040c0'
+} -%}
+{%- set divider_colour = {
+  'apostle':  'rgba(58,90,42,.4)',
+  'artifact': 'rgba(42,74,107,.4)',
+  'doctrine': 'rgba(90,42,90,.4)',
+  'mission':  'rgba(107,58,26,.4)',
+  'event':    'rgba(26,58,42,.4)',
+  'herald':   'rgba(107,80,16,.4)',
+  'age':      'rgba(42,42,90,.4)'
+} -%}
+{%- set art_bg = {
+  'apostle':  'linear-gradient(135deg,#c8d8b0 0%,#a8b880 60%,#708040 100%)',
+  'artifact': 'linear-gradient(135deg,#a0b8d0 0%,#708ab0 60%,#405880 100%)',
+  'doctrine': 'linear-gradient(135deg,#c8a0c8 0%,#a070a0 60%,#703870 100%)',
+  'mission':  'linear-gradient(135deg,#d8b890 0%,#b88860 60%,#885030 100%)',
+  'event':    'linear-gradient(135deg,#90c8a8 0%,#609870 60%,#386040 100%)',
+  'herald':   'linear-gradient(135deg,#d8c070 0%,#b89040 60%,#886010 100%)',
+  'age':      'linear-gradient(135deg,#a0a0d8 0%,#7070b0 60%,#404080 100%)'
+} -%}
+{%- set art_sym = {
+  'apostle': '✝',
+  'artifact': '⚗',
+  'doctrine': '📜',
+  'mission':  '✦',
+  'event':    '⚡',
+  'herald':   '☩',
+  'age':      '★'
+} -%}
+{%- set art_sym_colour = {
+  'apostle':  '#3b5a2a',
+  'artifact': '#2a4a6b',
+  'doctrine': '#5a2a5a',
+  'mission':  '#6b3a1a',
+  'event':    '#1a3a2a',
+  'herald':   '#6b5010',
+  'age':      '#2a2a5a'
+} -%}
+{% for page in cards | batch(8) %}
+<div class="sheet">
+  <div class="card-grid">
+    {% for card in page %}
+    {%- set tc   = tag_colour.get(card.type,     '#3a1e08') -%}
+    {%- set rc   = riso_colour.get(card.type,    '#c85010') -%}
+    {%- set dc   = divider_colour.get(card.type, 'rgba(90,50,10,.3)') -%}
+    {%- set ab   = art_bg.get(card.type,         art_bg['apostle']) -%}
+    {%- set sym  = art_sym.get(card.type,        '✦') -%}
+    {%- set symc = art_sym_colour.get(card.type, '#3a1e08') -%}
+    {%- if card.type == 'herald' -%}
+      {%- set effect_tag_text = 'CANNOT BE HELD · Resolve immediately' -%}
+    {%- elif card.type == 'mission' -%}
+      {%- set effect_tag_text = 'MISSION — Hold in hand' -%}
+    {%- elif card.type == 'age' -%}
+      {%- set effect_tag_text = 'GLOBAL · One active at a time' -%}
+    {%- elif card.type == 'event' -%}
+      {%- set effect_tag_text = card.timing -%}
+    {%- else -%}
+      {%- set effect_tag_text = card.effect_tag -%}
+    {%- endif -%}
+    {%- if card.type == 'age' and not card.cost -%}
+      {%- set cost_display = card.tag -%}
+    {%- else -%}
+      {%- set cost_display = card.cost -%}
+    {%- endif -%}
+    <div class="card {{ card.type }}">
+      <div class="card-bg"></div>
+      <div class="card-riso-a" style="background:{{ rc }}"></div>
+      <div class="card-riso-t"></div>
+      <div class="card-border"></div>
+      <div class="card-border-inner"></div>
+      <div class="card-corner cc-tl">❧</div>
+      <div class="card-corner cc-tr">❧</div>
+      <div class="card-corner cc-bl">❧</div>
+      <div class="card-corner cc-br">❧</div>
+      {% if card.copy_num and card.copies > 1 %}
+      <div class="copy-badge">{{ card.copy_num }}/{{ card.copies }}</div>
+      {% endif %}
+
+      <div class="card-type-band" style="background:{{ tc }}">
+        <div class="type-label">{{ card.type | capitalize }}</div>
+        {% if cost_display %}<div class="type-cost">{{ cost_display }}</div>{% endif %}
+      </div>
+
+      <div class="card-name">{{ card.name }}</div>
+
+      <div class="card-art">
+        <div class="card-art-fill">
+          <div class="card-art-gradient" style="background:{{ ab }}"></div>
+          <div class="card-art-halftone"></div>
+          <div class="card-art-symbol" style="color:{{ symc }}">{{ sym }}</div>
+          {% if card.art %}<img src="{{ card.art }}" alt="">{% endif %}
+        </div>
+      </div>
+
+      <div class="card-divider" style="background:{{ dc }}"></div>
+
+      <div class="card-effect">
+        <div class="effect-tag" style="background:{{ tc }}">{{ effect_tag_text }}</div>
+        {% if card.type == 'mission' %}
+        <div class="effect-body" style="margin-top:2px"><em>Condition:</em> {{ card.condition | safe }}</div>
+        {% else %}
+        <div class="effect-body" style="margin-top:2px">{{ card.effect | safe }}</div>
+        {% endif %}
+      </div>
+
+      {% if card.type == 'doctrine' and card.loss %}
+      <div class="loss-box">
+        <div class="loss-tag">⚠ Loss Condition</div>
+        <div class="loss-body">{{ card.loss | safe }}</div>
+      </div>
+      {% endif %}
+
+      {% if card.type == 'mission' and card.reward %}
+      <div class="reward-box">
+        <div class="reward-tag">✦ Reward</div>
+        <div class="reward-body">{{ card.reward | safe }}</div>
+      </div>
+      {% endif %}
+
+      {% if card.flavour %}
+      <div class="card-flavour">
+        <div class="flavour-text">{{ card.flavour }}</div>
+      </div>
+      {% endif %}
+
+      <div class="card-footer">
+        <div class="footer-game">dtka v1.0</div>
+        <div class="footer-set">{{ card.type | upper }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endfor %}
+</body>
+</html>

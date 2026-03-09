@@ -1,0 +1,297 @@
+prophets:
+
+  # ── The Reverend ────────────────────────────────────────────────
+  - id: reverend
+    name: The Reverend
+    epithet: '"The congregation will drink as one."'
+    build_path: S / V Build Path
+    accent_color: "#c8601a"
+    portrait_image: ""
+    abilities:
+      - tag: "Primary — Prophet Phase, once per turn"
+        text: "Pay <strong>1S + 1D</strong> → add <strong>1V</strong> to your pool."
+        style: ""
+      - tag: "⚠ Passive Penalty — checked each End Phase"
+        text: "If you hold <strong>0V</strong> at the start of your turn, pay <strong>2$</strong> or lose <strong>1S</strong>."
+        style: penalty
+      - tag: "☩ Resurrection — Fallen Prophet only"
+        text: "Spend all remaining $ (min 3$). Gain +1V per $ spent. Return with <strong>3S, 2D</strong>."
+        style: resurrection
+    win_conditions:
+      - badge: Win 1
+        text: "Loved — Seekers in pool"
+        target: 50S
+        progress: [12, 25, 37, 50]
+      - badge: Win 2
+        text: "Carnage — Victims accumulated"
+        target: 50V
+        progress: [12, 25, 37, 50]
+    slots:
+      doctrine:
+        - {num: D1, locked: false}
+        - {num: D2, locked: false}
+        - {num: D3, locked: true}
+      apostle:
+        - {num: A1, locked: false}
+        - {num: A2, locked: false}
+        - {num: A3, locked: false}
+      artifact:
+        - {num: R1, locked: false}
+        - {num: R2, locked: false}
+        - {num: R3, locked: true}
+    turn_phases:
+      - {name: Upkeep,  note: "+2S +1D<br>Draw 2"}
+      - {name: Prophet, note: "Use ability<br>free"}
+      - {name: Main,    note: "Play up to<br>3 cards"}
+      - {name: End,     note: "Win/loss<br>checks"}
+      - {name: Cleanup, note: "Discard<br>pass"}
+    fallen_text: >-
+      0S + 0D at End Phase → lose all Apostles &amp; Artifacts.
+      Pay resurrection cost on Main Phase to return.
+
+  # ── The Brand ───────────────────────────────────────────────────
+  - id: brand
+    name: The Brand
+    epithet: '"New name. New logo. Same NDA."'
+    build_path: D / S Build Path
+    accent_color: "#1a3a5a"
+    portrait_image: "images/prophet_the_brand.png"
+    abilities:
+      - tag: "Primary — Prophet Phase, once per turn"
+        text: "Gain <strong>1S</strong> for every <strong>5 Seekers</strong> currently in your pool (round down). The congregation grows itself."
+        style: ""
+      - tag: "⚠ Passive Penalty — checked each End Phase"
+        text: "If your Seeker count dropped this turn, pay <strong>2D</strong> or lose <strong>1 additional S</strong>. Attrition is unacceptable."
+        style: penalty
+      - tag: "☩ Resurrection — Fallen Prophet only"
+        text: "Pay <strong>4$</strong> and discard <strong>1 card</strong> from hand. Return with <strong>3S, 4D</strong> and draw <strong>2 cards</strong> immediately. The Brand pivots."
+        style: resurrection
+    win_conditions:
+      - badge: Win 1
+        text: "Worshipped — Devotion held at once"
+        target: 75D
+        progress: [18, 37, 56, 75]
+      - badge: Win 2
+        text: "Loved — Seekers in pool"
+        target: 50S
+        progress: [12, 25, 37, 50]
+    slots:
+      doctrine:
+        - {num: D1, locked: false}
+        - {num: D2, locked: false}
+        - {num: D3, locked: false}
+      apostle:
+        - {num: A1, locked: false}
+        - {num: A2, locked: false}
+        - {num: A3, locked: false}
+      artifact:
+        - {num: R1, locked: false}
+        - {num: R2, locked: true}
+        - {num: R3, locked: true}
+    turn_phases:
+      - {name: Upkeep,  note: "+2S +1D<br>Draw 2"}
+      - {name: Prophet, note: "Use ability<br>free"}
+      - {name: Main,    note: "Play up to<br>3 cards"}
+      - {name: End,     note: "Win/loss<br>checks"}
+      - {name: Cleanup, note: "Discard<br>pass"}
+    fallen_text: >-
+      0S + 0D at End Phase → lose all Apostles &amp; Artifacts.
+      Pay resurrection cost on Main Phase to return.
+
+  # ── The Commodore ───────────────────────────────────────────────
+  - id: commodore
+    name: The Commodore
+    epithet: '"Auditing the soul is a service. Services have fees."'
+    build_path: $ / V Build Path
+    accent_color: "#1a4a8b"
+    portrait_image: ""
+    abilities:
+      - tag: "Primary — Prophet Phase, once per turn"
+        text: "Gain <strong>1$</strong> for each Seeker currently in your pool."
+        style: ""
+      - tag: "⚠ Passive Penalty — checked each End Phase"
+        text: "If you hold <strong>50$ or more</strong>, spend <strong>5$</strong> or lose <strong>5S</strong>. The fleet is expensive to maintain."
+        style: penalty
+      - tag: "☩ Resurrection — Fallen Prophet only"
+        text: "Pay <strong>5V</strong> (or all V if fewer). Return with <strong>4S, 0D, 4$</strong>. The Commodore comes back with money, not faith."
+        style: resurrection
+    win_conditions:
+      - badge: Win 1
+        text: "Rich — Money held at once"
+        target: 100$
+        progress: [25, 50, 75, 100]
+      - badge: Win 2
+        text: "Carnage — Victims accumulated"
+        target: 50V
+        progress: [12, 25, 37, 50]
+    slots:
+      doctrine:
+        - {num: D1, locked: false}
+        - {num: D2, locked: false}
+        - {num: D3, locked: false}
+      apostle:
+        - {num: A1, locked: false}
+        - {num: A2, locked: false}
+        - {num: A3, locked: true}
+      artifact:
+        - {num: R1, locked: false}
+        - {num: R2, locked: false}
+        - {num: R3, locked: true}
+    turn_phases:
+      - {name: Upkeep,  note: "+2S +1D<br>Draw 2"}
+      - {name: Prophet, note: "Use ability<br>free"}
+      - {name: Main,    note: "Play up to<br>3 cards"}
+      - {name: End,     note: "Win/loss<br>checks"}
+      - {name: Cleanup, note: "Discard<br>pass"}
+    fallen_text: >-
+      0S + 0D at End Phase → lose all Apostles &amp; Artifacts.
+      Pay resurrection cost on Main Phase to return.
+
+  # ── The Family Man ──────────────────────────────────────────────
+  - id: family_man
+    name: The Family Man
+    epithet: '"We are all one. Especially your Seekers, which are now mine."'
+    build_path: V / D Build Path
+    accent_color: "#5a3a10"
+    portrait_image: ""
+    abilities:
+      - tag: "Primary — Prophet Phase, once per turn"
+        text: "Move <strong>1S</strong> from any opponent's pool to your <strong>V</strong> pool. If target has no Seekers, steal <strong>2$</strong> instead."
+        style: ""
+      - tag: "⚠ Passive Penalty — checked each End Phase"
+        text: "If you gained <strong>no V</strong> this turn and hold fewer than <strong>10S</strong>, lose <strong>2S</strong>. The family needs feeding."
+        style: penalty
+      - tag: "☩ Resurrection — Fallen Prophet only"
+        text: "Pay <strong>3D</strong> and move <strong>1S</strong> from any opponent's pool to your V. Cannot return without taking something."
+        style: resurrection
+    win_conditions:
+      - badge: Win 1
+        text: "Carnage — Victims accumulated"
+        target: 50V
+        progress: [12, 25, 37, 50]
+      - badge: Win 2
+        text: "Worshipped — Devotion held at once"
+        target: 75D
+        progress: [18, 37, 56, 75]
+    slots:
+      doctrine:
+        - {num: D1, locked: false}
+        - {num: D2, locked: false}
+        - {num: D3, locked: false}
+      apostle:
+        - {num: A1, locked: false}
+        - {num: A2, locked: true}
+        - {num: A3, locked: true}
+      artifact:
+        - {num: R1, locked: false}
+        - {num: R2, locked: false}
+        - {num: R3, locked: false}
+    turn_phases:
+      - {name: Upkeep,  note: "+2S +1D<br>Draw 2"}
+      - {name: Prophet, note: "Use ability<br>free"}
+      - {name: Main,    note: "Play up to<br>3 cards"}
+      - {name: End,     note: "Win/loss<br>checks"}
+      - {name: Cleanup, note: "Discard<br>pass"}
+    fallen_text: >-
+      0S + 0D at End Phase → lose all Apostles &amp; Artifacts.
+      Pay resurrection cost on Main Phase to return.
+
+  # ── The Master ──────────────────────────────────────────────────
+  - id: master
+    name: The Master
+    epithet: '"Silence is not the absence of speech. It is the presence of billing."'
+    build_path: $ / D Build Path
+    accent_color: "#c87820"
+    portrait_image: ""
+    abilities:
+      - tag: "Primary — Prophet Phase, once per turn"
+        text: "Pay <strong>1D</strong> → gain <strong>1$</strong>. Belief is a commodity. The Master is the exchange rate."
+        style: ""
+      - tag: "⚠ Passive Penalty — Vow of Silence"
+        text: "You may not use Event cards during opponents' turns unless you first pay <strong>2D</strong> to speak."
+        style: penalty
+      - tag: "☩ Resurrection — Fallen Prophet only"
+        text: "Skip your entire next turn in silent meditation — no actions, no cards. At the start of the following turn, return free with <strong>2S, 5D</strong>."
+        style: resurrection
+    win_conditions:
+      - badge: Win 1
+        text: "Rich — Money held at once"
+        target: 100$
+        progress: [25, 50, 75, 100]
+      - badge: Win 2
+        text: "Worshipped — Devotion held at once"
+        target: 75D
+        progress: [18, 37, 56, 75]
+    slots:
+      doctrine:
+        - {num: D1, locked: false}
+        - {num: D2, locked: false}
+        - {num: D3, locked: false}
+      apostle:
+        - {num: A1, locked: false}
+        - {num: A2, locked: false}
+        - {num: A3, locked: true}
+      artifact:
+        - {num: R1, locked: false}
+        - {num: R2, locked: false}
+        - {num: R3, locked: false}
+    turn_phases:
+      - {name: Upkeep,  note: "+2S +1D<br>Draw 2"}
+      - {name: Prophet, note: "Use ability<br>free"}
+      - {name: Main,    note: "Play up to<br>3 cards"}
+      - {name: End,     note: "Win/loss<br>checks"}
+      - {name: Cleanup, note: "Discard<br>pass"}
+    fallen_text: >-
+      0S + 0D at End Phase → lose all Apostles &amp; Artifacts.
+      Pay resurrection cost on Main Phase to return.
+
+  # ── The Televangelist ───────────────────────────────────────────
+  - id: televangelist
+    name: The Televangelist
+    epithet: '"He cried on camera. Donations tripled."'
+    build_path: S / $ Build Path
+    accent_color: "#8b1a10"
+    portrait_image: ""
+    abilities:
+      - tag: "Primary — Prophet Phase, once per turn"
+        text: "Pay <strong>1$</strong> → gain <strong>1S per 10D</strong> currently in your pool (round down, min 1S)."
+        style: ""
+      - tag: "⚠ Passive Penalty — checked each End Phase"
+        text: "If you hold more <strong>$</strong> than <strong>D</strong>, spend <strong>5$</strong> or lose <strong>5S</strong>. Wealth without faith is optics without content."
+        style: penalty
+      - tag: "☩ Resurrection — Pass the Collection Plate"
+        text: "Each opponent must donate <strong>1 resource</strong> of their choice (S or $) to your pool. You pay nothing. Return with <strong>2D</strong> plus whatever was donated."
+        style: resurrection
+    win_conditions:
+      - badge: Win 1
+        text: "Loved — Seekers in pool"
+        target: 50S
+        progress: [12, 25, 37, 50]
+      - badge: Win 2
+        text: "Rich — Money held at once"
+        target: 100$
+        progress: [25, 50, 75, 100]
+    slots:
+      doctrine:
+        - {num: D1, locked: false}
+        - {num: D2, locked: true}
+        - {num: D3, locked: true}
+      apostle:
+        - {num: A1, locked: false}
+        - {num: A2, locked: false}
+        - {num: A3, locked: false}
+      artifact:
+        - {num: R1, locked: false}
+        - {num: R2, locked: false}
+        - {num: R3, locked: false}
+    turn_phases:
+      - {name: Upkeep,  note: "+2S +1D<br>Draw 2"}
+      - {name: Prophet, note: "Use ability<br>free"}
+      - {name: Main,    note: "Play up to<br>3 cards"}
+      - {name: End,     note: "Win/loss<br>checks"}
+      - {name: Cleanup, note: "Discard<br>pass"}
+    fallen_text: >-
+      0S + 0D at End Phase → lose all Apostles &amp; Artifacts.
+      Pay resurrection cost on Main Phase to return.
+
+

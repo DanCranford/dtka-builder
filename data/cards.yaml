@@ -1,0 +1,221 @@
+# Drink the Kool-Aide — Card data
+# Fields used by each type:
+#   All types:   id, name, type, copies, flavour, art
+#   apostle/artifact/doctrine: cost, effect_tag, effect
+#   doctrine:    + loss
+#   mission:     cost, condition, reward   (no `effect` field)
+#   event:       timing, effect
+#   herald:      effect
+#   age:         tag, effect   (cost is left blank; `tag` fills the cost band)
+
+cards:
+
+  # ── APOSTLES ──────────────────────────────────────────────────────────────
+
+  - id: apostle_wealthy_heiress
+    name: Wealthy Heiress
+    type: apostle
+    copies: 3
+    cost: "2S + 1$"
+    effect_tag: "ACTIVE · Once per turn"
+    effect: "Gain <strong>1$</strong> for every <strong>10S</strong> in your pool (round down)."
+    flavour: "Daddy's money works just as well as faith."
+    art: "images/wealthy heiress_.jpg"
+
+  - id: apostle_true_believer
+    name: True Believer
+    type: apostle
+    copies: 3
+    cost: "2S + 2D"
+    effect_tag: "PASSIVE · Always active"
+    effect: "At the start of your <strong>Upkeep</strong>, gain <strong>+1D</strong> in addition to normal income."
+    flavour: "He sold his house. Twice. We're not sure how."
+    art: "images/true believer_.jpg"
+
+  - id: apostle_inner_circle
+    name: The Inner Circle
+    type: apostle
+    copies: 1
+    cost: "4S + 3D"
+    effect_tag: "PASSIVE · Always active  ⚑ STANDOUT"
+    effect: "Gain <strong>+1S and +1D</strong> at Upkeep instead of normal income. Opponents cannot use abilities that target you <strong>more than once per round</strong>."
+    flavour: "They had a special dining table. Everyone else ate outside. In November."
+    art: "images/inner circle.jpg"
+
+  - id: apostle_recruiter
+    name: The Recruiter
+    type: apostle
+    copies: 2
+    cost: "2S + 2$"
+    effect_tag: "ACTIVE · Once per turn"
+    effect: "Pay <strong>1$</strong> → gain <strong>3S</strong>."
+    flavour: "She had a gift for finding people who were 'between communities.'"
+    art: "images/the recruiter.jpg"
+
+  # ── ARTIFACTS ─────────────────────────────────────────────────────────────
+
+  - id: artifact_sacred_text
+    name: The Sacred Text
+    type: artifact
+    copies: 2
+    cost: "1S + 2D"
+    effect_tag: "PASSIVE · Always active"
+    effect: "Gain <strong>+1D</strong> at Upkeep. When a Doctrine in your play area is removed, gain <strong>2D</strong>."
+    flavour: "It arrived this morning. We're already on the second printing."
+    art: "images/sacred text.jpg"
+
+  - id: artifact_collection_plate
+    name: The Collection Plate
+    type: artifact
+    copies: 2
+    cost: "2S + 1D"
+    effect_tag: "PASSIVE · Always active"
+    effect: "At the start of each of your turns, each opponent pays <strong>1S or 1$</strong> to a supply. At end of Main Phase, you gain <strong>all supply resources</strong>."
+    flavour: "It was passed around three times. The second time was a test of faith. The third time was rent."
+    art: "images/collections plate.jpg"
+
+  - id: artifact_holy_ship
+    name: Holy Ship
+    type: artifact
+    copies: 1
+    cost: "4S + 5$"
+    effect_tag: "PASSIVE · Always active  ⚑ STANDOUT"
+    effect: "Gain <strong>+1$</strong> at Upkeep. Opponent effects targeting your <strong>$ pool</strong> are reduced by <strong>2</strong> (minimum 0)."
+    flavour: "Registered in the Cayman Islands for spiritual reasons."
+    art: "images/Holy Ship.jpg"
+
+  # ── DOCTRINES ─────────────────────────────────────────────────────────────
+
+  - id: doctrine_prosperity_gospel
+    name: Prosperity Gospel
+    type: doctrine
+    copies: 2
+    cost: "2D"
+    effect_tag: "PASSIVE · Always active"
+    effect: "At Upkeep, gain <strong>+1$</strong> for every <strong>10V</strong> you have (round down)."
+    loss: "If your <strong>$ pool drops to 0</strong>, remove this card. Lose <strong>3D</strong>."
+    flavour: "God wants you to be rich. Specifically, He wants you to give the money to us."
+    art: "images/prosperity gospel_.jpg"
+
+  - id: doctrine_sacred_hierarchy
+    name: Sacred Hierarchy
+    type: doctrine
+    copies: 2
+    cost: "1D"
+    effect_tag: "PASSIVE · Always active"
+    effect: "Your Apostles in play cannot be targeted by opponent card effects."
+    loss: "If you have <strong>no Apostles in play</strong> at start of your turn, remove this card. Lose <strong>2D</strong>."
+    flavour: "The structure was sacred. The paperwork was not."
+
+  # ── MISSIONS ──────────────────────────────────────────────────────────────
+
+  - id: mission_recruit_drive
+    name: Recruitment Drive
+    type: mission
+    copies: 1
+    condition: "Gain <strong>15S or more</strong> in a single turn."
+    reward: "Gain <strong>+5S</strong> and draw <strong>1 card</strong>."
+    flavour: "She brought a clipboard and a smile. Nine people followed her home."
+    art: "images/recruitment drive.jpg"
+
+  - id: mission_financial_audit
+    name: Survive the Audit
+    type: mission
+    copies: 1
+    condition: "End a turn with <strong>10+ $</strong> in your pool."
+    reward: "Gain <strong>+3$</strong> and <strong>+2D</strong>."
+    flavour: "The auditor left satisfied. We're not sure what he was inspecting."
+
+  # ── EVENTS ────────────────────────────────────────────────────────────────
+
+  - id: event_have_a_vision
+    name: Have a Vision
+    type: event
+    copies: 2
+    timing: "INSTANT — your turn"
+    effect: "Draw <strong>3 cards</strong> from the Providence deck. Discard 1."
+    flavour: "I was visited by a being of pure light. It told me the donations need to be in cash."
+    art: "images/have a vision.jpg"
+
+  - id: event_crisis_of_faith
+    name: Crisis of Faith
+    type: event
+    copies: 2
+    timing: "INTERRUPT — any turn"
+    effect: "Choose one opponent. They must <strong>skip their Prophet Phase</strong> next turn. Their ability does not fire."
+    flavour: "Even the most devoted had questions sometimes. The Prophet had a form for that."
+    art: "images/crisis of faith.jpg"
+
+  - id: event_anonymous_donation
+    name: Anonymous Donation
+    type: event
+    copies: 2
+    timing: "INSTANT — your turn"
+    effect: "Gain <strong>+4$</strong>."
+    flavour: "The cheque had no name on it. The amount had three commas."
+    art: "images/anonymous donation_.jpg"
+
+  # ── HERALDS ───────────────────────────────────────────────────────────────
+
+  - id: herald_first_age
+    name: Herald of the First Age
+    type: herald
+    copies: 1
+    effect: "All players gain <strong>+2S</strong>. Advance to <strong>Age 2 (Great Awakening)</strong>."
+    flavour: "The first sign was a pamphlet. Then a newsletter. Then a waiting list."
+    art: "images/first age_.jpg"
+
+  - id: herald_second_age
+    name: Herald of the Second Age
+    type: herald
+    copies: 1
+    effect: "Each player with fewer than <strong>10S</strong> loses <strong>3S</strong>. Advance to <strong>Age 3 (Wellness Era)</strong>."
+    flavour: "The second sign was a building permit."
+    art: "images/herald of the second age.jpg"
+
+  - id: herald_reckoning
+    name: Herald of Reckoning
+    type: herald
+    copies: 1
+    effect: "Each player immediately checks <strong>all loss conditions</strong>. Trigger any that apply. Advance to <strong>Age 6 (Satanic Panic)</strong>."
+    flavour: "The fifth sign was a subpoena. Everyone had been expecting it. Nobody was ready."
+    art: "images/herald of reckoning_.jpg"
+
+  # ── AGES ──────────────────────────────────────────────────────────────────
+
+  - id: age_of_aquarius
+    name: Age of Aquarius
+    type: age
+    copies: 1
+    tag: "Age 1"
+    effect: "All Seeker income is reduced to <strong>+1S</strong> per Upkeep (instead of +2S). The movement is still finding its feet."
+    flavour: '"Come on people now, smile on your brother…"'
+    art: "images/age of Aquarius_.jpg"
+
+  - id: age_great_awakening
+    name: Great Awakening
+    type: age
+    copies: 1
+    tag: "Age 2"
+    effect: "All players gain <strong>+1 additional S</strong> at Upkeep. Congregation market row is expanded to <strong>7 cards</strong>."
+    flavour: "The algorithm is doing most of the work, honestly."
+    art: "images/age of awakening_.jpg"
+
+  - id: age_social_media
+    name: Social Media Age
+    type: age
+    copies: 1
+    tag: "Age 4"
+    effect: "All players gain <strong>+1D</strong> at Upkeep. <strong>Worshipped</strong> win condition threshold reduced by <strong>5D</strong> for all players."
+    flavour: "The algorithm rewards engagement. All engagement. Any engagement."
+    art: "images/age of social media.jpg"
+
+  - id: age_of_reckoning
+    name: Age of Reckoning
+    type: age
+    copies: 1
+    tag: "Age 8"
+    effect: "At Upkeep, every player must <strong>declare one resource</strong> they will gain this turn. Failure → lose <strong>2S</strong>. Win conditions checked at the <strong>start AND end</strong> of every turn."
+    flavour: "The accountant had prepared a very thorough report. Nobody wanted to read it, but everyone had to."
+    art: "images/age of reckoning.jpg"
+
