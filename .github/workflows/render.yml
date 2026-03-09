@@ -1,0 +1,51 @@
+name: Render Assets
+
+# Triggers whenever a YAML data file (or a template) is changed on main.
+# NOTE: card art images live in old-materials/, which is gitignored.
+#       To get images in the rendered PDFs you must either:
+#         a) remove old-materials/ from .gitignore and commit the images, or
+#         b) store images elsewhere and update the art paths in cards.yaml.
+#       Without the images the cards still render — they just show the
+#       placeholder gradient/symbol instead of a photo.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/**.yaml"
+      - "templates/**.html"
+      - "images/**.jpg"
+      - "images/**.png"
+  workflow_dispatch:   # allows manual trigger from the GitHub UI
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install project dependencies
+        run: uv sync
+
+      - name: Install Playwright Chromium
+        run: uv run playwright install chromium --with-deps
+
+      - name: Render cards and placemats
+        run: uv run render-assets
+
+      - name: Upload rendered PDFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-pdfs
+          path: output/
+          retention-days: 30
