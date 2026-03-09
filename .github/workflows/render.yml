@@ -48,9 +48,12 @@ jobs:
         run: uv run render-assets
 
       - name: Commit rendered PDFs to main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
           git add output/
           git diff --cached --quiet || git commit -m "chore: render PDFs [skip ci]"
           git push
