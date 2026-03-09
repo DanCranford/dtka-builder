@@ -219,3 +219,11 @@ cards:
     flavour: "The accountant had prepared a very thorough report. Nobody wanted to read it, but everyone had to."
     art: "images/age of reckoning.jpg"
 
+  - id: dave
+    name: the Dave I added
+    type: apostle
+    copies: 2
+    tag: "I made this on my phone"
+    effect: "something happens"
+    flavour: "why is flavour British"
+    art: "images/dave.png"
